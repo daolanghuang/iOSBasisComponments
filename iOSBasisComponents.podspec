@@ -11,9 +11,9 @@ Pod::Spec.new do |s|
     s.version = '0.1.2'
     s.license = 'MIT'
     s.summary = 'iOSBasisComponents in Swift'
-    s.homepage = 'http://source.enncloud.cn/smc_ios/Fastlane_Actions'
-    s.authors = { 'Enn Software Foundation' => 'huangdaolang@ennew.cn' }
-    s.source = { :git => 'https://source.enncloud.cn/smc_ios/iOSBasisComponents.git', :tag => s.version }
+    s.homepage = 'https://github.com/daolanghuang/iOSBasisComponments'
+    s.authors = { 'Enn Software Foundation' => 'h_daodao@163.com' }
+    s.source = { :git => 'https://github.com/daolanghuang/iOSBasisComponments.git', :tag => s.version }
 
     s.ios.deployment_target = '9.0'
 
