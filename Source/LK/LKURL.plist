@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>phr</key>
+	<dict>
+		<key>pro</key>
+		<string>https://lk-phr-pro.op.laikang.com</string>
+		<key>pre</key>
+		<string>https://lk-phr-pro.op.laikang.com</string>
+		<key>qa</key>
+		<string>http://lk-phr-test.cloud.enndata.cn</string>
+		<key>dev</key>
+		<string>http://lk-phr-test.cloud.enndata.cn</string>
+	</dict>
+	<key>lkService</key>
+	<dict>
+		<key>pro</key>
+		<string>https://lk-app-api-pre.op.laikang.com/api/v1</string>
+		<key>pre</key>
+		<string>https://lk-app-api-pre.op.laikang.com/api/v1</string>
+		<key>qa</key>
+		<string>http://lk-app-api-test.cloud.enndata.cn/api/v1</string>
+		<key>dev</key>
+		<string>http://lk-app-api-test.cloud.enndata.cn/api/v1</string>
+	</dict>
+	<key>nim</key>
+	<dict>
+		<key>pro</key>
+		<string>https://lk-dr-pre.op.laikang.com</string>
+		<key>pre</key>
+		<string>https://lk-dr-pre.op.laikang.com</string>
+		<key>qa</key>
+		<string>http://lk-dr-test.cloud.enndata.cn</string>
+		<key>dev</key>
+		<string>http://lk-dr-test.cloud.enndata.cn</string>
+	</dict>
+	<key>uploadImg</key>
+	<dict>
+		<key>pro</key>
+		<string>https://lk-upload-api-pro.op.laikang.com/common/fileUpload</string>
+		<key>pre</key>
+		<string>https://lk-upload-api-pro.op.laikang.com/common/fileUpload</string>
+		<key>qa</key>
+		<string>http://upload-image.cloud.enndata.cn/common/fileUpload</string>
+		<key>dev</key>
+		<string>http://upload-image.cloud.enndata.cn/common/fileUpload</string>
+	</dict>
+	<key>userCenter</key>
+	<dict>
+		<key>pro</key>
+		<string>https://lk-sso-pro.op.laikang.com</string>
+		<key>pre</key>
+		<string>https://lk-sso-pro.op.laikang.com</string>
+		<key>qa</key>
+		<string>http://lk-qa-sso.cloud.enndata.cn</string>
+		<key>dev</key>
+		<string>http://test-sso.cloud.enndata.cn</string>
+	</dict>
+</dict>
+</plist>

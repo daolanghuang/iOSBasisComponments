@@ -1,0 +1,166 @@
+//
+//  ImageBrowerViewController.swift
+//  QuShow
+//
+//  Created by daolang.huang on 16/8/30.
+//  Copyright © 2016年 DL. All rights reserved.
+//
+
+import UIKit
+
+
+class ImageBrowerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    var imgs: [MImage]!
+    var position = 0
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.view.backgroundColor = UIColor.black
+        // Do any additional setup after loading the view.
+        
+        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: ScreenWidth, height: ScreenHeight)
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        flowLayout.minimumLineSpacing = 0//每个相邻layout的上下
+        flowLayout.minimumInteritemSpacing = 0//每个相邻layout的左右
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        
+        let collection_image = UICollectionView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight), collectionViewLayout: flowLayout)
+        collection_image.isPagingEnabled = true
+        collection_image.delegate = self
+        collection_image.dataSource = self
+        collection_image.tag = 1001
+        collection_image.backgroundColor = UIColor.clear
+        collection_image.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "1")
+        collection_image.showsHorizontalScrollIndicator = false
+        
+        self.view.addSubview(collection_image)
+        
+        collection_image.contentOffset.x = CGFloat(position)*ScreenWidth
+        
+        addPageControl()
+        self.view.alpha = 0
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        UIView.animate(withDuration: 0.6, animations: {
+            self.view.alpha = 1
+        }) 
+    }
+    
+    //MARK: collection 代理
+    func addPageControl(){
+        let pageControl = UIPageControl(frame: CGRect( x: 0, y: ScreenHeight - 30, width: ScreenWidth, height: 30))
+        // 设置非选中页的圆点颜色
+        pageControl.pageIndicatorTintColor = SpaceColor
+        // 设置选中页的圆点颜色
+        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.hidesForSinglePage = true
+        pageControl.isEnabled = false
+        pageControl.numberOfPages = imgs.count
+        pageControl.tag = 101
+        pageControl.currentPage = position
+        pageControl.backgroundColor = ThemeColor
+        pageControl.alpha = 0.6
+        
+        self.view.addSubview(pageControl)
+        
+        let btn_save = UIButton()
+        btn_save.frame = CGRect(x: 0, y: ScreenHeight - 70, width: ScreenWidth, height: 40)
+        btn_save.setTitle("保存到相册", for: UIControlState())
+        btn_save.setTitleColor(UIColor.white, for: UIControlState())
+        btn_save.backgroundColor = ThemeColor
+        btn_save.alpha = 0.6
+        btn_save.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btn_save.addTarget(self, action: #selector(ImageBrowerViewController.savePhoto), for: UIControlEvents.touchUpInside)
+        
+        self.view.addSubview(btn_save)
+    }
+    
+    //保存照片
+    func savePhoto(){
+        let img: String!
+        if let collection = self.view.viewWithTag(1001) as? UICollectionView{
+            img = imgs[Int((collection.contentOffset.x)/ScreenWidth)].getOrignPath()
+        }else{
+            img = ""
+        }
+        
+        let util = ImageUtil()
+        util.save([img])
+    }
+    func getImage(_ url: String) -> UIImage{
+        let image = UIImage(contentsOfFile: url)
+        
+        if image == nil{
+            return UIImage()
+        }
+        
+        return image!
+    }
+   
+    
+    //存储图片至指定相册中
+    //MARK: collection delegate
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imgs.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "1", for: indexPath)
+        var img: YSZoomView!
+        if cell.viewWithTag(10001) == nil{
+            img = YSZoomView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight))
+            img.tag = 10001
+            img.back = pop
+            
+            cell.addSubview(img)
+        }else{
+            img = cell.viewWithTag(10001) as! YSZoomView
+        }
+        
+        getImage(imgs[indexPath.row].getOrignPath(), view: img)
+        
+        return cell
+    }
+    
+    func getImage(_ url: String, view: YSZoomView){
+        view.imageView?.image = UIImage(contentsOfFile: url)
+    }
+    
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView.tag == 1001{
+            let page: Int = Int((scrollView.contentOffset.x)/ScreenWidth)
+            //    DLog(@"%d", page);
+            // 设置页码
+            if let pageControl = self.view.viewWithTag(101) as? UIPageControl{
+                pageControl.currentPage = Int(page)
+            }
+        }
+    }
+    
+    override func pop() {
+        self.dismiss(animated: false, completion: nil)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
